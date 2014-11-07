@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HotelDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="CustomerNo" />
+    </Key>
+    <Property Name="CustomerNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CustomerSurname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CustomerMiddleName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="VIP" Type="Boolean" Nullable="false" />
+    <Property Name="Gender" Type="Boolean" Nullable="false" />
+    <Property Name="Address1" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address2" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Region" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Country" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PostalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CustomerIDType" Type="Boolean" Nullable="false" />
+    <Property Name="CustomerIDNo" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PreferedLang" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="DateInSystem" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="GuestCard" Relationship="Self.FK__GuestCard__Guest__182C9B23" FromRole="Customers" ToRole="GuestCard" />
+  </EntityType>
+  <EntityType Name="GuestCard">
+    <Key>
+      <PropertyRef Name="GuestCardNo" />
+    </Key>
+    <Property Name="GuestCardNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TravelAgency" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CheckInDateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CheckOutDateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="RoomNo" Type="Int16" Nullable="false" />
+    <Property Name="SpecialRequirements" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customers" Relationship="Self.FK__GuestCard__Guest__182C9B23" FromRole="GuestCard" ToRole="Customers" />
+    <NavigationProperty Name="HouseKeeping" Relationship="Self.FK__GuestCard__RoomN__1920BF5C" FromRole="GuestCard" ToRole="HouseKeeping" />
+    <NavigationProperty Name="Payments" Relationship="Self.FK__Payments__Paymen__1BFD2C07" FromRole="GuestCard" ToRole="Payments" />
+  </EntityType>
+  <EntityType Name="HouseKeeping">
+    <Key>
+      <PropertyRef Name="RoomNo" />
+    </Key>
+    <Property Name="RoomNo" Type="Int16" Nullable="false" />
+    <Property Name="RoomStatus" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="StopSaleBegin" Type="DateTime" Precision="3" />
+    <Property Name="StopSaleEnd" Type="DateTime" Precision="3" />
+    <Property Name="StopSaleNote" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="GuestCard" Relationship="Self.FK__GuestCard__RoomN__1920BF5C" FromRole="HouseKeeping" ToRole="GuestCard" />
+  </EntityType>
+  <EntityType Name="Payments">
+    <Key>
+      <PropertyRef Name="PaymentsCard" />
+      <PropertyRef Name="RoomPrice" />
+    </Key>
+    <Property Name="PaymentsCard" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoomPrice" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+    <Property Name="DiscountCash" Type="Decimal" Precision="10" Scale="4" />
+    <Property Name="DiscountPercens" Type="Byte" />
+    <Property Name="Paid" Type="Decimal" Precision="10" Scale="4" />
+    <NavigationProperty Name="GuestCard" Relationship="Self.FK__Payments__Paymen__1BFD2C07" FromRole="Payments" ToRole="GuestCard" />
+  </EntityType>
+  <Association Name="FK__GuestCard__Guest__182C9B23">
+    <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+    <End Role="GuestCard" Type="Self.GuestCard" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="CustomerNo" />
+      </Principal>
+      <Dependent Role="GuestCard">
+        <PropertyRef Name="GuestCardNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__GuestCard__RoomN__1920BF5C">
+    <End Role="HouseKeeping" Type="Self.HouseKeeping" Multiplicity="1" />
+    <End Role="GuestCard" Type="Self.GuestCard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HouseKeeping">
+        <PropertyRef Name="RoomNo" />
+      </Principal>
+      <Dependent Role="GuestCard">
+        <PropertyRef Name="RoomNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Payments__Paymen__1BFD2C07">
+    <End Role="GuestCard" Type="Self.GuestCard" Multiplicity="1" />
+    <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GuestCard">
+        <PropertyRef Name="GuestCardNo" />
+      </Principal>
+      <Dependent Role="Payments">
+        <PropertyRef Name="PaymentsCard" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HotelDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Customers" EntityType="Self.Customers" />
+    <EntitySet Name="GuestCard" EntityType="Self.GuestCard" />
+    <EntitySet Name="HouseKeeping" EntityType="Self.HouseKeeping" />
+    <EntitySet Name="Payments" EntityType="Self.Payments" />
+    <AssociationSet Name="FK__GuestCard__Guest__182C9B23" Association="Self.FK__GuestCard__Guest__182C9B23">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="GuestCard" EntitySet="GuestCard" />
+    </AssociationSet>
+    <AssociationSet Name="FK__GuestCard__RoomN__1920BF5C" Association="Self.FK__GuestCard__RoomN__1920BF5C">
+      <End Role="HouseKeeping" EntitySet="HouseKeeping" />
+      <End Role="GuestCard" EntitySet="GuestCard" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Payments__Paymen__1BFD2C07" Association="Self.FK__Payments__Paymen__1BFD2C07">
+      <End Role="GuestCard" EntitySet="GuestCard" />
+      <End Role="Payments" EntitySet="Payments" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

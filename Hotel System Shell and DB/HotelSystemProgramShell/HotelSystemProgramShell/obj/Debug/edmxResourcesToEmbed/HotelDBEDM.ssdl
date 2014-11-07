@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HotelDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="CustomerNo" />
+    </Key>
+    <Property Name="CustomerNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CustomerSurname" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="CustomerMiddleName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="DateOfBirth" Type="date" Nullable="false" />
+    <Property Name="VIP" Type="bit" Nullable="false" />
+    <Property Name="Gender" Type="bit" Nullable="false" />
+    <Property Name="Address1" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Address2" Type="varchar" MaxLength="25" />
+    <Property Name="City" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Region" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="Country" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="PostalCode" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="CustomerIDType" Type="bit" Nullable="false" />
+    <Property Name="CustomerIDNo" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Phone" Type="char" MaxLength="20" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="PreferedLang" Type="varchar" MaxLength="10" />
+    <Property Name="DateInSystem" Type="smalldatetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GuestCard">
+    <Key>
+      <PropertyRef Name="GuestCardNo" />
+    </Key>
+    <Property Name="GuestCardNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TravelAgency" Type="varchar" MaxLength="10" />
+    <Property Name="CheckInDateTime" Type="datetime" Nullable="false" />
+    <Property Name="CheckOutDateTime" Type="datetime" Nullable="false" />
+    <Property Name="RoomNo" Type="smallint" Nullable="false" />
+    <Property Name="SpecialRequirements" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="HouseKeeping">
+    <Key>
+      <PropertyRef Name="RoomNo" />
+    </Key>
+    <Property Name="RoomNo" Type="smallint" Nullable="false" />
+    <Property Name="RoomStatus" Type="char" MaxLength="3" Nullable="false" />
+    <Property Name="StopSaleBegin" Type="datetime" />
+    <Property Name="StopSaleEnd" Type="datetime" />
+    <Property Name="StopSaleNote" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'D:\PROGRAMMING\HOTEL SYSTEM SHELL AND DB\HOTELSYSTEMPROGRAMSHELL\HOTELSYSTEMPROGRAMSHELL\HOTELDB.MDF.dbo.Payments' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Payments">
+    <Key>
+      <PropertyRef Name="PaymentsCard" />
+      <PropertyRef Name="RoomPrice" />
+    </Key>
+    <Property Name="PaymentsCard" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoomPrice" Type="smallmoney" Nullable="false" />
+    <Property Name="DiscountCash" Type="smallmoney" />
+    <Property Name="DiscountPercens" Type="tinyint" />
+    <Property Name="Paid" Type="smallmoney" />
+  </EntityType>
+  <Association Name="FK__GuestCard__Guest__182C9B23">
+    <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+    <End Role="GuestCard" Type="Self.GuestCard" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="CustomerNo" />
+      </Principal>
+      <Dependent Role="GuestCard">
+        <PropertyRef Name="GuestCardNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__GuestCard__RoomN__1920BF5C">
+    <End Role="HouseKeeping" Type="Self.HouseKeeping" Multiplicity="1" />
+    <End Role="GuestCard" Type="Self.GuestCard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HouseKeeping">
+        <PropertyRef Name="RoomNo" />
+      </Principal>
+      <Dependent Role="GuestCard">
+        <PropertyRef Name="RoomNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Payments__Paymen__1BFD2C07">
+    <End Role="GuestCard" Type="Self.GuestCard" Multiplicity="1" />
+    <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GuestCard">
+        <PropertyRef Name="GuestCardNo" />
+      </Principal>
+      <Dependent Role="Payments">
+        <PropertyRef Name="PaymentsCard" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HotelDBModelStoreContainer">
+    <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GuestCard" EntityType="Self.GuestCard" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HouseKeeping" EntityType="Self.HouseKeeping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Payments" EntityType="Self.Payments" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Payments].[PaymentsCard] AS [PaymentsCard], 
+    [Payments].[RoomPrice] AS [RoomPrice], 
+    [Payments].[DiscountCash] AS [DiscountCash], 
+    [Payments].[DiscountPercens] AS [DiscountPercens], 
+    [Payments].[Paid] AS [Paid]
+    FROM [dbo].[Payments] AS [Payments]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__GuestCard__Guest__182C9B23" Association="Self.FK__GuestCard__Guest__182C9B23">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="GuestCard" EntitySet="GuestCard" />
+    </AssociationSet>
+    <AssociationSet Name="FK__GuestCard__RoomN__1920BF5C" Association="Self.FK__GuestCard__RoomN__1920BF5C">
+      <End Role="HouseKeeping" EntitySet="HouseKeeping" />
+      <End Role="GuestCard" EntitySet="GuestCard" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Payments__Paymen__1BFD2C07" Association="Self.FK__Payments__Paymen__1BFD2C07">
+      <End Role="GuestCard" EntitySet="GuestCard" />
+      <End Role="Payments" EntitySet="Payments" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

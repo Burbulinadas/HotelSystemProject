@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="HotelDBModelStoreContainer" CdmEntityContainer="HotelDBEntities">
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="HotelDBModel.Customers">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="CustomerNo" ColumnName="CustomerNo" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="CustomerSurname" ColumnName="CustomerSurname" />
+          <ScalarProperty Name="CustomerMiddleName" ColumnName="CustomerMiddleName" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="VIP" ColumnName="VIP" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Region" ColumnName="Region" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+          <ScalarProperty Name="CustomerIDType" ColumnName="CustomerIDType" />
+          <ScalarProperty Name="CustomerIDNo" ColumnName="CustomerIDNo" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PreferedLang" ColumnName="PreferedLang" />
+          <ScalarProperty Name="DateInSystem" ColumnName="DateInSystem" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GuestCard">
+      <EntityTypeMapping TypeName="HotelDBModel.GuestCard">
+        <MappingFragment StoreEntitySet="GuestCard">
+          <ScalarProperty Name="GuestCardNo" ColumnName="GuestCardNo" />
+          <ScalarProperty Name="TravelAgency" ColumnName="TravelAgency" />
+          <ScalarProperty Name="CheckInDateTime" ColumnName="CheckInDateTime" />
+          <ScalarProperty Name="CheckOutDateTime" ColumnName="CheckOutDateTime" />
+          <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />
+          <ScalarProperty Name="SpecialRequirements" ColumnName="SpecialRequirements" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HouseKeeping">
+      <EntityTypeMapping TypeName="HotelDBModel.HouseKeeping">
+        <MappingFragment StoreEntitySet="HouseKeeping">
+          <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />
+          <ScalarProperty Name="RoomStatus" ColumnName="RoomStatus" />
+          <ScalarProperty Name="StopSaleBegin" ColumnName="StopSaleBegin" />
+          <ScalarProperty Name="StopSaleEnd" ColumnName="StopSaleEnd" />
+          <ScalarProperty Name="StopSaleNote" ColumnName="StopSaleNote" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Payments">
+      <EntityTypeMapping TypeName="HotelDBModel.Payments">
+        <MappingFragment StoreEntitySet="Payments">
+          <ScalarProperty Name="PaymentsCard" ColumnName="PaymentsCard" />
+          <ScalarProperty Name="RoomPrice" ColumnName="RoomPrice" />
+          <ScalarProperty Name="DiscountCash" ColumnName="DiscountCash" />
+          <ScalarProperty Name="DiscountPercens" ColumnName="DiscountPercens" />
+          <ScalarProperty Name="Paid" ColumnName="Paid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
