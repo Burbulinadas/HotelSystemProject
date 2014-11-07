@@ -1,6 +1,6 @@
 HotelSystemProject
 ==================
-This is a HotelSystem program that utilizes data from and to the sql database.
+This is a HotelSystem program that utilizes data from and to the SQL database.
 
 HotelSystem features:
 - "System Admin", "Front Desk" and "Housekeeping" units.
